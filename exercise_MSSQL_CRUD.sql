@@ -32,7 +32,7 @@ WHERE [Salary] BETWEEN 20000 AND 30000
 SELECT CONCAT([FirstName],' ',[MiddleName],' ',[LastName])
 AS [Full Name]
 FROM [dbo].[Employees]
-WHERE [Salary] = 25000 OR [Salary] = 14000 OR  [Salary] = 12500 OR [Salary] = 23600
+WHERE [Salary] IN (25000,14000,12500,23600)
 
 --11
 SELECT [FirstName],[LastName] 
@@ -51,6 +51,69 @@ FROM [Employees]
 ORDER BY [SALARY] DESC
 
 --14
-SELECT [FirstName],[LastName] 
+SELECT [FirstName],[LastName]
 FROM [Employees]
-WHERE [ManagerID] != 4
+WHERE NOT [DepartmentID] = 4
+
+--15
+  SELECT * FROM [Employees]
+ORDER BY [Salary] 
+    DESC, [FirstName] 
+     ASC, [LastName] 
+    DESC, [MiddleName] 
+     ASC
+	 
+--16 
+GO
+CREATE VIEW [V_EmployeesSalaries]
+AS
+SELECT [FirstName],[LastName],[Salary] FROM [Employees]
+
+GO
+
+SELECT * FROM
+V_EmployeesSalaries
+
+GO
+
+--17
+CREATE VIEW [V_EmployeeNameJobTitle]
+AS
+SELECT CONCAT([FirstName],' ',[MiddleName],' ',[LastName])
+AS [FullName], 
+[JobTitle] 
+AS [Job Title]
+FROM [Employees]
+
+--18
+SELECT DISTINCT [JobTitle] FROM [Employees]
+
+--19
+SELECT TOP(10) * FROM [Projects]
+ORDER BY [StartDate], [Name] 
+
+--20
+SELECT TOP(7) * FROM [Employees]
+ORDER BY [EmployeeID] 
+
+
+--21
+SELECT * FROM [Employees]
+WHERE [DepartmentID] IN (1,2,4,11)
+
+UPDATE [Employees]
+SET [Salary] += [Salary] * 0.12
+WHERE [DepartmentID] IN (1,2,3,11)
+
+SELECT [Salary] FROM [Employees]
+
+GO
+--24
+
+SELECT [CountryName],[CountryCode],[CurrencyCode],
+      CASE
+	   WHEN [CurrencyCode] = 'EUR' THEN 'Euro'
+	   ELSE 'Not Euro'
+	   END AS [Currency]
+       FROM [Countries]
+ORDER BY [CountryName]
