@@ -110,5 +110,13 @@ SELECT EOMONTH('2014-06-06',2)
 
 SELECT DATENAME(WEEKDAY,EOMONTH('2014-06-06',1))
 
+--Other functions
+
+SELECT CAST('15' AS DECIMAL)
+
+SELECT CONVERT(DECIMAL,'55')
+
+SELECT ISNULL(NULL,'The value is null, please introduse other value')
+
 
 
