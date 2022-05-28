@@ -74,3 +74,51 @@ ORDER BY e.[HireDate]
 	INNER JOIN          [Projects] AS p ON ep.[ProjectID] = p.[ProjectID]
 	WHERE p.[StartDate] > '8.13.2002' AND p.[EndDate] IS NULL
 	ORDER BY e.[EmployeeID]
+
+
+--8
+SELECT 
+       e.[EmployeeID]
+	  ,e.[FirstName]
+	  ,CASE
+	      when DATEPART(YEAR,p.[StartDate]) >=  2005 THEN NULL
+		  ELSE p.[Name]
+		  END AS [ProjectName] 
+FROM [Employees] AS e
+INNER JOIN [EmployeesProjects] AS ep ON e.[EmployeeID] = ep.[EmployeeID]
+INNER JOIN [Projects] AS p ON ep.[ProjectID] = p.[ProjectID]
+WHERE E.[EmployeeID] = 24
+
+--9
+USE [SoftUni]
+
+SELECT  
+      e.[EmployeeID]
+	  ,e.[FirstName]
+	  ,e.[ManagerID]
+	  ,m.[FirstName] AS [ManagerName] 
+FROM                                    ---------!!!!!!!!
+[Employees] AS e
+LEFT JOIN Employees AS m ON e.[ManagerID] = m.[EmployeeID]
+WHERE m.[EmployeeID] IN(3,7)
+ORDER BY e.[EmployeeID]
+
+--10
+----------ot tuk
+
+
+USE [Geography]
+--12
+
+SELECT  
+         mc.[CountryCode]
+	     ,m.[MountainRange]
+	     ,p.[PeakName]
+	     ,p.[Elevation] 
+	
+FROM [Countries] AS c 
+INNER JOIN [MountainsCountries] AS mc ON c.[CountryCode] = mc.[CountryCode]
+INNER JOIN [Mountains] AS m ON mc.[MountainId] = m.[Id]
+INNER JOIN [Peaks] AS p ON m.[Id] = p.[MountainId]
+WHERE mc.[CountryCode] = 'BG' AND p.[Elevation] > 2835
+ORDER BY p.[Elevation] DESC
