@@ -95,3 +95,17 @@ ORDER BY [DepositGroup] DESC, [IsDepositExpired] ASC
 		,[DepositAmount] - LEAD([DepositAmount]) OVER(ORDER BY [ID]) as [Difference] 
     FROM [WizzardDeposits]) AS [QUERI]
 	
+
+--18
+USE [SoftUni]
+
+SELECT DISTINCT [DepartmentID]
+                ,[Salary] AS [ThirdHighestSalary]
+  FROM
+				(SELECT d.[DepartmentID]
+				        ,e.[Salary]
+					   ,DENSE_RANK() OVER(PARTITION BY d.[DepartmentID] ORDER BY e.[Salary] DESC) AS [SalaryRank]
+				  FROM [Employees] AS e
+			RIGHT JOIN [Departments] AS d
+					ON e.[DepartmentID] = d.[DepartmentID]
+					) AS [SalaryRankinkQueryR]
