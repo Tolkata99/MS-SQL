@@ -11,6 +11,7 @@ BEGIN
 	SET @projectWeeks = DATEDIFF(WEEK,@StartDate,@EndDate)
 	RETURN @projectWeeks
 END
+
 --Table-Valued Function
 CREATE FUNCTION udf_AverageSalaryByDepartment()
 RETURNS TABLE AS
@@ -21,3 +22,14 @@ RETURN
 	  JOIN [Employees] AS e ON d.[DepartmentID] = e.[DepartmentID]
 	  GROUP BY d.[DepartmentID],d.[Name]
 )
+
+--Stored Procedure
+CREATE PROCEDURE usp_Eployeesprojects
+AS
+SELECT [FirstName]
+  FROM [Employees] AS e
+  JOIN [EmployeesProjects] AS ep ON e.[EmployeeID] = ep.[EmployeeID]
+  JOIN [Projects] AS p ON ep.[ProjectID] = p.[ProjectID]
+
+
+--EXEC usp_Eployeesprojects
