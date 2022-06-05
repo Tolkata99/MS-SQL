@@ -33,3 +33,10 @@ SELECT [FirstName]
 
 
 --EXEC usp_Eployeesprojects
+
+CREATE PROC usp_AddNumbers(@num INT,@num2 INT, @res INT OUTPUT)
+AS
+SET @res = @num + @num2
+
+DECLARE @result INT
+EXEC usp_AddNumbers 100, 500, @result
