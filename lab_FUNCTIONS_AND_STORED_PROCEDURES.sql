@@ -40,3 +40,21 @@ SET @res = @num + @num2
 
 DECLARE @result INT
 EXEC usp_AddNumbers 100, 500, @result
+
+--ERROR Handling
+CREATE usp_AddEployeeToProject(@EployeeID INT, @ProjectID INT)
+AS
+BEGIN
+     DECLARE @EmployeesProjectNumber INT
+	 SET @EmployeesProjectNumber = (SELECT COUNT(*) FROM EmployeesProjects WHERE EmployeeID = @EployeeID)
+	 IF(@EmployeesProjectNumber >= 3
+	      THROW 50001, 'Too many projects',1  
+     BEGIN TRY
+	      INSERT INTO EmployeesProjects VALUES (@EployeeID,@ProjectID)
+     END TRY
+	 BEGIN CATCH
+	      SELECT @@ERROR
+     END CATCH
+
+END
+
